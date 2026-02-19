@@ -1,2 +1,51 @@
-more content will follow?
-This is a simple python web server
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Bootcamp Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e2f; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: #2a2a40; padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); text-align: center; max-width: 450px; width: 100%; border-top: 4px solid #00d2ff; }
+        h1 { color: #00d2ff; margin-bottom: 5px;}
+        p { color: #a0a0b0; font-size: 0.9rem; margin-bottom: 25px; }
+        button { background: #00d2ff; color: #1e1e2f; border: none; padding: 12px 24px; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 4px 10px rgba(0, 210, 255, 0.3); }
+        button:hover { background: #00a8cc; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        .data-box { background: #151521; padding: 20px; border-radius: 8px; margin-top: 25px; font-family: 'Courier New', Courier, monospace; text-align: left; font-size: 0.95rem; border: 1px solid #3a3a50; }
+        .highlight { color: #00ffcc; font-weight: bold; }
+        .key { color: #ff79c6; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🚀 Production Env</h1>
+        <p>V1.0 - Connected via Nginx Reverse Proxy</p>
+        <button onclick="fetchTelemetry()">Fetch Server Telemetry</button>
+        <div id="statusBox" class="data-box" style="display: none;"></div>
+    </div>
+
+    <script>
+        async function fetchTelemetry() {
+            const box = document.getElementById('statusBox');
+            box.style.display = 'block';
+            box.innerHTML = "Querying backend API...";
+            
+            try {
+                // This calls the Python backend!
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                box.innerHTML = `
+                    <span class="key">Service:</span> <span class="highlight">${data.status.toUpperCase()}</span><br><br>
+                    <span class="key">Uptime:</span> <span class="highlight">${data.uptime_seconds} seconds</span><br><br>
+                    <span class="key">Client IP:</span> <span class="highlight">${data.client_ip}</span><br><br>
+                    <span class="key">Server Time:</span> <span class="highlight">${data.server_time}</span>
+                `;
+            } catch (err) {
+                box.innerHTML = `<span style="color: #ff4d4d;">Critical Error: API Unreachable.</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
