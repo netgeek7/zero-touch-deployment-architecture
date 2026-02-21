@@ -45,7 +45,7 @@ class AppHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"404 - Not Found")
 
 if __name__ == '__main__':
-    server_address = ('127.0.0.1', 8000)
+    server_address = ('0.0.0.0', 8000)
     httpd = HTTPServer(server_address, AppHandler)
     print("Dashboard Microservice running on 127.0.0.1:8000...", flush=True)
     httpd.serve_forever()
