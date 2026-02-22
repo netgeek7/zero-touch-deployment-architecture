@@ -8,7 +8,7 @@ WORKDIR /app
 COPY server.py index.html requirements.txt /app/
 
 #run the pip install command:
-pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 #expose this port (documentation)
 EXPOSE 8000
