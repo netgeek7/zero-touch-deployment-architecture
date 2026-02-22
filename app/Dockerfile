@@ -5,7 +5,10 @@ FROM python:3.12-alpine
 WORKDIR /app
 
 #copy the contents over
-COPY server.py index.html /app/
+COPY server.py index.html requirements.txt /app/
+
+#run the pip install command:
+pip install --no-cache-dir -r requirements.txt
 
 #expose this port (documentation)
 EXPOSE 8000
