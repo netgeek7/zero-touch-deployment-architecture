@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  web:
+    build: app/.
+    container_name: dashboard_prod
+    ports:
+      -127.0.0.1:8000:8000
+    restart: always
+    depends_on:
+      -cache
+
+
+  cache:
+    image: redis:alpine
+    container_name: redis_cache
+    restart: always
