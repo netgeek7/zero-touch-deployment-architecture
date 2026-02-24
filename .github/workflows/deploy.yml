@@ -1,0 +1,16 @@
+name: Auto-deploy to production
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Triggering local deployment script
+        run: |
+           echo "Starting automated deployment...."
+           sudo /home/shafi/scripts/deploy.sh
+           echo "deployment successful!...."
