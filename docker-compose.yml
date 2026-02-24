@@ -2,6 +2,7 @@ version: '3.8'
 services:
   web:
     build: app/.
+    image: pyweb-server:latest
     container_name: dashboard_prod
     ports:
       - "127.0.0.1:8000:8000"
