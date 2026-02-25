@@ -12,5 +12,5 @@ jobs:
       - name: Triggering local deployment script
         run: |
            echo "Starting automated deployment...."
-           sudo /home/shafi/scripts/deploy.sh
+           sudo ~/scripts/deploy.sh
            echo "deployment successful!...."
