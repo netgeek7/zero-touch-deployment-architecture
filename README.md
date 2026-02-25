@@ -7,7 +7,7 @@ A fully containerized, multi-tier microservice web application demonstrating mod
 This project simulates a production-grade infrastructure environment. Traffic is securely routed through a reverse proxy, handled by a containerized Python backend, and state is maintained in an in-memory Redis cache. Deployments are fully automated via GitHub Actions.
 
 
-🛠️ Tech Stack & Skills Demonstrated
+🛠️ **Tech Stack & Skills Demonstrated**
 
    Infrastructure Automation: Bash, Systemd, Cron
 
