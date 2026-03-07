@@ -21,4 +21,4 @@ jobs:
             script: |
               cd ~/zero-touch-deployment-architecture
               git pull origin main
-              docker compose up -d --build
+              docker-compose up --detach --build
