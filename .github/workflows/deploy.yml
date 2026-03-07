@@ -1,16 +1,24 @@
-name: Auto-deploy to production
+name: Deploy to aws instance
 
 on:
   push:
     branches:
-        - main
+      - main
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
-      - name: Triggering local deployment script
-        run: |
-           echo "Starting automated deployment...."
-           sudo ~/scripts/deploy.sh
-           echo "deployment successful!...."
+        - name: code check
+          uses: actions/checkout@v6
+
+        - name: ssh deployment to aws instance
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_USERNAME }}
+            key: ${{ secrets.EC2_SSH_KEY }}
+            script: |
+              cd ~/zero-touch-deployment-architecture
+              git pull origin main
+              docker-compose up -d --build
