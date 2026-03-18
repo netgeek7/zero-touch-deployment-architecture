@@ -1,0 +1,37 @@
+provider "aws" {
+	region = var.aws_region
+}
+
+data "aws_ami" "ubuntu" {
+	most_recent = true
+	owners = ["099720109477"]
+
+	filter {
+		name = "name"
+		values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+	}
+}
+
+resource "aws_key_pair" "webserverkeys" {
+	key_name = "server_ssh_keys"
+	public_key = file("~/.ssh/aws_ec2_key.pub")
+}
+
+resource "aws_instance" "ubuntuserver" {
+	ami = data.aws_ami.ubuntu.id
+	instance_type = var.instance_size
+	key_name = aws_key_pair.webserverkeys.id
+	subnet_id = aws_subnet.public_subnet.id
+	vpc_security_group_ids = [aws_security_group.server_sg.id]	
+	tags = {
+		Name = "prod-server"
+	}
+	user_data = file("setup.sh")
+}
+
+resource "aws_eip" "static_ip" {
+	domain = "vpc"
+
+	instance = aws_instance.ubuntuserver.id
+	depends_on = [aws_internet_gateway.igw]
+}
