@@ -35,38 +35,42 @@ flowchart LR
   end
   Internet((Internet)) -->|HTTP: 80| IGW
 ```
-#Core Competencies & Technologies Demonstrated
-1. Infrastructure as Code (Terraform)
+# 🛠 Core Competencies & Technologies Demonstrated
+1. **Infrastructure as Code (Terraform)**
 
-    Custom VPC Networking: Abandoned the default AWS network to architect a custom VPC with dedicated public subnets, internet         gateways, and custom route tables.
+    Custom VPC Networking: Abandoned the default AWS network to architect a custom VPC with dedicated public subnets, internet gateways, and custom route tables.
 
-    Zero-Trust Security: Configured strict Security Groups acting as virtual firewalls to restrict ingress traffic to only             required ports (HTTP 80, SSH 22).
+    Zero-Trust Security: Configured strict Security Groups acting as virtual firewalls to restrict ingress traffic to only required ports (HTTP 80, SSH 22).
 
-    Automated Bootstrapping: Utilized user_data to inject bash scripts (setup.sh) during the EC2 boot sequence, ensuring the host      is provisioned with Docker and Git before the first login.
+    Automated Bootstrapping: Utilized user_data to inject bash scripts (setup.sh) during the EC2 boot sequence, ensuring the host is provisioned with Docker and Git before the first login.
 
     State Management: Handled infrastructure drift, immutable server replacements, and Elastic IP (Static Anchor) associations.
 
-2. Continuous Integration & Deployment (GitHub Actions)
+2. **Continuous Integration & Deployment (GitHub Actions)**
 
     Automated Workflows: Engineered a YAML-based CI/CD pipeline that triggers on git push to the main branch.
 
-    Race Condition Mitigation: Implemented cloud-init status --wait to ensure the AWS bootstrapping phase completes before the         deployment runner attempts to execute code.
+    Race Condition Mitigation: Implemented cloud-init status --wait to ensure the AWS bootstrapping phase completes before the deployment runner attempts to execute code.
 
-    Secret Management: Utilized GitHub Secrets to securely pass SSH keys and host IPs to the runner, keeping credentials out of        version control.
+    Secret Management: Utilized GitHub Secrets to securely pass SSH keys and host IPs to the runner, keeping credentials out of version control.
 
-3. Container Orchestration & Networking (Docker)
+3. **Container Orchestration & Networking (Docker)**
 
     Multi-Container Environments: Managed a multi-service architecture (Web, Cache, Proxy) using docker-compose.yml.
 
-    Reverse Proxying: Containerized Nginx instead of relying on host-OS installations, achieving true environment parity and           protecting the Python application server from Slowloris attacks and direct internet exposure.
+    Reverse Proxying: Containerized Nginx instead of relying on host-OS installations, achieving true environment parity and protecting the Python application server from Slowloris attacks and direct internet exposure.
 
-    Internal Docker Networking: Leveraged Docker's internal DNS to allow containers to communicate securely via service names          rather than hardcoded IPs.
+    Internal Docker Networking: Leveraged Docker's internal DNS to allow containers to communicate securely via service names rather than hardcoded IPs.
 
-#Deployment Instructions
+# 🚀 Deployment Instructions
 
-    Provision Infrastructure: Navigate to the terraform/ directory, update the variables, and run:
-     terraform init -> terraform plan -> terraform apply
+  1. Provision Infrastructure Navigate to the terraform/ directory, update the variables, and run:
+    Bash
+```
+    terraform init
+    terraform plan
+    terraform apply
+```
+  2. Update Secrets Copy the outputted Elastic IP into your GitHub Repository Secrets as EC2_HOST.
 
-    Update Secrets: Copy the outputted Elastic IP into the GitHub Repository Secrets (EC2_HOST).
-
-    Deploy: Push changes to the main branch. GitHub Actions will handle the SSH connection, code pull, and container orchestration      automatically.
+  3. Deploy Push changes to the main branch. GitHub Actions will handle the SSH connection, code pull, and container orchestration automatically.
