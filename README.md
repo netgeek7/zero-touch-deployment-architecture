@@ -64,13 +64,13 @@ flowchart LR
 
 # 🚀 Deployment Instructions
 
-  1. Provision Infrastructure Navigate to the terraform/ directory, update the variables, and run:
-    Bash
+  1. **Provision Infrastructure:** Navigate to the terraform/ directory, update the variables, and run:
+     ***Bash***
 ```
     terraform init
     terraform plan
     terraform apply
 ```
-  2. Update Secrets Copy the outputted Elastic IP into your GitHub Repository Secrets as EC2_HOST.
+  2. **Update Secrets:** Copy the outputted Elastic IP into your GitHub Repository Secrets as EC2_HOST.
 
-  3. Deploy Push changes to the main branch. GitHub Actions will handle the SSH connection, code pull, and container orchestration automatically.
+  3. **Deploy:** Push changes to the main branch. GitHub Actions will handle the SSH connection, code pull, and container orchestration automatically.
