@@ -14,7 +14,7 @@ services:
     image: nginx:latest
     container_name: nginx_proxy
     volumes:
-      - config/pyweb_nginx.conf:etc/nginx/conf.d/pyweb_nginx.conf
+      - ./config/pyweb_nginx.conf:etc/nginx/conf.d/pyweb_nginx.conf
     ports:
       - "80:80"
     depends_on:
