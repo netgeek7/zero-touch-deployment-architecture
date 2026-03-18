@@ -4,12 +4,22 @@ services:
     build: app/.
     image: pyweb-server:latest
     container_name: dashboard_prod
-    ports:
-      - "127.0.0.1:8000:8000"
+    expose:
+      - "8000"
     restart: always
     depends_on:
       - cache
 
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    volumes:
+      - config/pyweb_nginx.conf:etc/nginx/conf.d/pyweb_nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+      - cache
 
   cache:
     image: redis:alpine
